@@ -1,14 +1,8 @@
 #!/bin/bash
 
-# Check if the script is run as root
-if [ "$EUID" -ne 0 ]; then
-  echo "Please run as root (use sudo)"
-  exit 1
-fi
-
 # Function to add lines to .bashrc
 add_to_file() {
-  local file="$HOME/$1"
+  local file="/home/kstshn/$1"
   local line="$2"
 
   # Check if the line already exists to prevent duplicates
@@ -33,7 +27,7 @@ install_packages() {
   curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
   add_to_file .bashrc "eval "$(zoxide init --cmd cd bash)""
 
-  source "$HOME/.bashrc"
+  source "/home/kstshn/.bashrc"
 
   echo "Installing bun..."
   curl -fsSL https://bun.sh/install | bash
@@ -49,26 +43,26 @@ install_packages
 
 # Adding lines to .bashrc
 # fzf
-add_to_file .bashrc "[ -f ~/.fzf.bash ] && source ~/.fzf.bash"
+add_to_file ".bashrc" "[ -f /home/kstshn/.fzf.bash ] && source ~/.fzf.bash"
 
 # nvim
-add_to_file .bashrc 'export PATH="$PATH:/opt/nvim-linux64/bin\"'
+add_to_file ".bashrc" 'export PATH="$PATH:/opt/nvim-linux64/bin\"'
 
 # bun
-add_to_file .bashrc 'export BUN_INSTALL="$HOME/.bun"'
-add_to_file .bashrc "export PATH=$BUN_INSTALL/bin:$PATH"
+add_to_file ".bashrc" 'export BUN_INSTALL="/home/kstshn/.bun"'
+add_to_file ".bashrc" "export PATH=$BUN_INSTALL/bin:$PATH"
 
 # nvim settings
-mkdir "$HOME/.config"
-mkdir "$HOME/.config/nvim"
-git clone https://github.com/oakward/nvim.git ~/.config/nvim
+mkdir "/home/kstshn/.config"
+mkdir "/home/kstshn/.config/nvim"
+git clone https://github.com/oakward/nvim.git /home/kstshn/.config/nvim
 
 # Aliases
-add_to_file .bash_aliases "alias b=bun"
-add_to_file .bash_aliases "alias la=ls -a"
+add_to_file ".bash_aliases" "alias b=bun"
+add_to_file ".bash_aliases" "alias la='ls -a'"
 
 # Apply changes to .bashrc
 echo "Applying changes to bashrc..."
-source "$HOME/.bashrc"
+source "/home/kstshn/.bashrc"
 
 echo "Script execution completed!"
