@@ -38,15 +38,34 @@ install_packages() {
   echo "Installing bun..."
   curl -fsSL https://bun.sh/install | bash
   echo "Packages installed successfully."
+
+  # nvim
+  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+  sudo rm -rf /opt/nvim
+  sudo tar -C /opt -xzf nvim-linux64.tar.gz
 }
 # Installing packages
 install_packages
 
 # Adding lines to .bashrc
+# fzf
 add_to_file .bashrc "[ -f ~/.fzf.bash ] && source ~/.fzf.bash"
-add_to_file .bashrc "export BUN_INSTALL="$HOME/.bun""
+
+# nvim
+add_to_file .bashrc 'export PATH="$PATH:/opt/nvim-linux64/bin\"'
+
+# bun
+add_to_file .bashrc 'export BUN_INSTALL="$HOME/.bun"'
 add_to_file .bashrc "export PATH=$BUN_INSTALL/bin:$PATH"
+
+# nvim settings
+mkdir "$HOME/.config"
+mkdir "$HOME/.config/nvim"
+git clone https://github.com/oakward/nvim.git ~/.config/nvim
+
+# Aliases
 add_to_file .bash_aliases "alias b=bun"
+add_to_file .bash_aliases "alias la=ls -a"
 
 # Apply changes to .bashrc
 echo "Applying changes to bashrc..."
