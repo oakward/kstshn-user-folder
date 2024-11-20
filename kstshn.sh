@@ -17,11 +17,11 @@ add_to_file() {
 # Function to install packages
 install_packages() {
   echo "Updating package list..."
-  apt update
+  sudo apt update
 
   echo "Installing required packages..."
   local packages=("git" "fzf") # Add your desired packages here
-  apt install -y "${packages[@]}"
+  sudo apt install -y "${packages[@]}"
 
   echo "Installing zoxide..."
   curl -sSfL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | sh
